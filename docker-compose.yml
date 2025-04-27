@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    ports:
+      - "5173:5173"
+
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+    env_file:
+      - .env
