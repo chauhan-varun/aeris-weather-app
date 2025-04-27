@@ -4,47 +4,22 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [react()],
-  base: '/', // Use root-relative paths
+  base: '/', // Root-relative paths for Render.com
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
   build: {
-    chunkSizeWarningLimit: 800,
+    // Disable code splitting entirely for maximum compatibility
+    cssCodeSplit: true,
+    sourcemap: false, 
     rollupOptions: {
       output: {
-        manualChunks: (id) => {
-          // Use a more conservative chunking strategy for better compatibility
-          if (id.includes('node_modules')) {
-            // Group React and TanStack together to ensure dependencies are available
-            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom') || id.includes('tanstack')) {
-              return 'react-tanstack-vendor';
-            }
-            // Other libraries
-            if (id.includes('recharts')) {
-              return 'data-vendor';
-            }
-            return 'vendor';
-          }
-          
-          // Application code
-          if (id.includes('/components/')) {
-            return 'components';
-          }
-        },
-        // Optimize code splitting
-        chunkFileNames: 'assets/[name]-[hash].js',
-        entryFileNames: 'assets/[name]-[hash].js',
-      },
-    },
-    // Optimize build
-    target: 'esnext',
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
+        // Don't split code into chunks to avoid dependency loading issues
+        manualChunks: undefined,
+        // IMPORTANT: This format ensures all code is in a single bundle
+        format: 'es',
       },
     },
   },
