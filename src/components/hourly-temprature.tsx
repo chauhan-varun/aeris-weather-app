@@ -37,7 +37,7 @@ export function HourlyTemperature({ data }: HourlyTemperatureProps) {
         <CardTitle>Today's Temperature</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="h-[200px] w-full">
+        <div className="h-[180px] sm:h-[200px] w-full">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={chartData}>
               <XAxis
@@ -59,9 +59,9 @@ export function HourlyTemperature({ data }: HourlyTemperatureProps) {
                   if (active && payload && payload.length) {
                     return (
                       <div className="rounded-lg border bg-background p-2 shadow-sm">
-                        <div className="grid grid-cols-2 gap-2">
+                        <div className="grid grid-cols-2 gap-1 sm:gap-2">
                           <div className="flex flex-col">
-                            <span className="text-[0.70rem] uppercase text-muted-foreground">
+                            <span className="text-[0.65rem] sm:text-[0.70rem] uppercase text-muted-foreground">
                               Temperature
                             </span>
                             <span className="font-bold">
@@ -69,7 +69,7 @@ export function HourlyTemperature({ data }: HourlyTemperatureProps) {
                             </span>
                           </div>
                           <div className="flex flex-col">
-                            <span className="text-[0.70rem] uppercase text-muted-foreground">
+                            <span className="text-[0.65rem] sm:text-[0.70rem] uppercase text-muted-foreground">
                               Feels Like
                             </span>
                             <span className="font-bold">
