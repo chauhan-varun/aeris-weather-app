@@ -4,6 +4,7 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [react()],
+  base: './', // Add this line to ensure assets are loaded with relative paths
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -14,26 +15,20 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          // Create a 'vendor' chunk for node_modules
+          // Use a more conservative chunking strategy for better compatibility
           if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom')) {
-              return 'react-vendor';
+            // Group React and TanStack together to ensure dependencies are available
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom') || id.includes('tanstack')) {
+              return 'react-tanstack-vendor';
             }
-            if (id.includes('tanstack')) {
-              return 'tanstack-vendor';
-            }
+            // Other libraries
             if (id.includes('recharts')) {
-              return 'recharts-vendor';
+              return 'data-vendor';
             }
             return 'vendor';
           }
           
-          // Group UI components
-          if (id.includes('/components/ui/')) {
-            return 'ui-components';
-          }
-          
-          // Group other components
+          // Application code
           if (id.includes('/components/')) {
             return 'components';
           }
