@@ -4,7 +4,7 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [react()],
-  base: '/', // Root-relative paths for Render.com
+  base: '/', // Root-relative paths for Render.com deployment
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
