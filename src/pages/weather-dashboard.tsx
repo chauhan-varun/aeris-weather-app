@@ -11,8 +11,8 @@ import { useGeolocation } from "@/hooks/use-geolocation";
 import { WeatherDetails } from "../components/weather-details";
 import { WeatherForecast } from "../components/weather-forecast";
 import { HourlyTemperature } from "../components/hourly-temprature";
-import WeatherSkeleton from "../components/loading-skeleton";
 import { FavoriteCities } from "@/components/favorite-cities";
+import { CircleLoader } from "react-spinners";
 
 export function WeatherDashboard() {
   const {
@@ -37,7 +37,12 @@ export function WeatherDashboard() {
   };
 
   if (locationLoading) {
-    return <WeatherSkeleton />;
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh]">
+        <CircleLoader color="#3b82f6" size={60} speedMultiplier={0.8} className="mb-4" />
+        <p className="text-muted-foreground">Loading your location...</p>
+      </div>
+    );
   }
 
   if (locationError) {
@@ -91,7 +96,12 @@ export function WeatherDashboard() {
   }
 
   if (!weatherQuery.data || !forecastQuery.data) {
-    return <WeatherSkeleton />;
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh]">
+        <CircleLoader color="#3b82f6" size={60} speedMultiplier={0.8} className="mb-4" />
+        <p className="text-muted-foreground">Loading weather data...</p>
+      </div>
+    );
   }
 
   return (
@@ -105,11 +115,11 @@ export function WeatherDashboard() {
           onClick={handleRefresh}
           disabled={weatherQuery.isFetching || forecastQuery.isFetching}
         >
-          <RefreshCw
-            className={`h-4 w-4 ${
-              weatherQuery.isFetching ? "animate-spin" : ""
-            }`}
-          />
+          {weatherQuery.isFetching || forecastQuery.isFetching ? (
+            <CircleLoader color="#3b82f6" size={16} speedMultiplier={1} />
+          ) : (
+            <RefreshCw className="h-4 w-4" />
+          )}
         </Button>
       </div>
 
