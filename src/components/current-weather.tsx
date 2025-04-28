@@ -1,6 +1,7 @@
 import { Card, CardContent } from "./ui/card";
 import { ArrowDown, ArrowUp, Droplets, Wind } from "lucide-react";
 import type { WeatherData, GeocodingResponse } from "@/api/types";
+import { WeatherIcon } from "@/lib/weather-icons";
 
 interface CurrentWeatherProps {
   data: WeatherData;
@@ -79,12 +80,12 @@ export function CurrentWeather({ data, locationName }: CurrentWeatherProps) {
 
           <div className="flex flex-col items-center justify-center">
             <div className="relative flex aspect-square w-full max-w-[200px] items-center justify-center">
-              <img
-                src={`https://openweathermap.org/img/wn/${currentWeather.icon}@4x.png`}
-                alt={currentWeather.description}
-                className="h-full w-full object-contain"
-              />
-              <div className="absolute bottom-0 text-center">
+              <div className="flex flex-col items-center gap-4">
+                <WeatherIcon 
+                  iconCode={currentWeather.icon} 
+                  size={120} 
+                  className={`${currentWeather.icon.includes('01') ? 'text-yellow-400' : 'text-blue-400'}`}
+                />
                 <p className="text-sm font-medium capitalize">
                   {currentWeather.description}
                 </p>
