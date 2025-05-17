@@ -10,7 +10,7 @@ export function Layout({ children }: PropsWithChildren) {
       </main>
       <footer className="border-t backdrop-blur supports-[backdrop-filter]:bg-background/60 py-12">
         <div className="container mx-auto px-4 text-center dark:text-gray-200 text-gray-800">
-          <p>Made by Daksh Jhamb</p>
+          <p>Made by Varun Chauhan</p>
         </div>
       </footer>
     </div>
